@@ -1,50 +1,64 @@
 #include <iostream>
 #include"classes.h"
+#include"Menu.h"
 #include<conio.h>
+
 using namespace std;
 int main(int argc, char *argv[])
 {
-    MenuItem * Menu[3]=
-    {
-        new MenuItemNew(),
-        new MenuItemDisplay(),
-        new MenuItemExit()
-    };
-    int highlight=0;
-    bool flag=true;
+   // menu_Method();
+   Menu menu(3,WHITE,BLACK,BLACK,WHITE);
+    menu.AddMenuItem(new MenuItemNew());
+    menu.AddMenuItem(new MenuItemDisplay());
+    menu.AddMenuItem(new MenuItemExit());
+    menu.Run(nullptr);
+
+    cout << "Hello world!" << std::endl;
+    system("pause");
+}
+
+void menu_Method()
+{
+    MenuItem *Menu[3] =
+        {
+            new MenuItemNew(),
+            new MenuItemDisplay(),
+            new MenuItemExit()};
+    int highlight = 0;
+    bool flag = true;
     do
     {
         system("cls");
-        for(int i=0;i<3;i++)
+        for (int i = 0; i < 3; i++)
         {
-            if(i==highlight)
+            if (i == highlight)
             {
-                Menu[i]->backColor=WHITE;
-                Menu[i]->foreColor=BLACK;
+                Menu[i]->backColor = WHITE;
+                Menu[i]->foreColor = BLACK;
             }
             else
             {
-                Menu[i]->backColor=BLACK;
-                Menu[i]->foreColor=WHITE;
+                Menu[i]->backColor = BLACK;
+                Menu[i]->foreColor = WHITE;
             }
-    
+
             Menu[i]->Display();
         }
-        char key=getch();
+        char key = getch();
         switch (key)
         {
         case -32:
-            key=getch();
+            key = getch();
             switch (key)
             {
             case 72:
-                if(highlight>0)
+                if (highlight > 0)
                 {
                     highlight--;
                 }
                 break;
             case 80:
-                if(highlight<2)
+                if (highlight < 2)
                 {
                     highlight++;
                 }
@@ -52,25 +66,21 @@ int main(int argc, char *argv[])
             default:
                 break;
             }
-            
+
             break;
-        
+
         case Enter:
-        if (highlight==2)
-        {
-            flag=false;
-            Menu[highlight]->MenuAction(&flag);
-        }
-        else
-        {
-            void* p=nullptr;
-            Menu[highlight]->MenuAction(p);
-        }
+            if (highlight == 2)
+            {
+                flag = false;
+                Menu[highlight]->MenuAction(&flag);
+            }
+            else
+            {
+                void *p = nullptr;
+                Menu[highlight]->MenuAction(p);
+            }
             break;
         }
     } while (flag);
-    
-   
-    cout << "Hello world!" << std::endl;
-    system("pause");
 }
